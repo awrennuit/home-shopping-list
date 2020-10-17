@@ -3,7 +3,7 @@ import "./Toast.css";
 
 export default function Toast(props) {
   return (
-    <div id="toast" className={props.shown ? 'toast-shown' : 'toast-hidden'}>
+    <div id="toast" className={props.shown ? "toast-shown" : "toast-hidden"}>
       <p>Added!</p>
     </div>
   );
