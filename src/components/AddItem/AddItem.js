@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import "./AddItem.css";
 
 export default function AddItem() {
   const inputRef = useRef();
@@ -22,14 +23,20 @@ export default function AddItem() {
   };
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
-      <input
-        onChange={(e) => setItemToAdd(e.target.value)}
-        ref={inputRef}
-        type="text"
-        value={itemToAdd}
-      />
-      <button type="submit">Add</button>
-    </form>
+    <div id="add-wrapper">
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <input
+          id="add-input"
+          onChange={(e) => setItemToAdd(e.target.value)}
+          placeholder="what to buy?"
+          ref={inputRef}
+          type="text"
+          value={itemToAdd}
+        />
+        <button id="add-btn" type="submit">
+          +
+        </button>
+      </form>
+    </div>
   );
 }
