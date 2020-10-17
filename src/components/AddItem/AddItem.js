@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Context } from "../App/App";
 import Toast from "../Toast/Toast";
 import "./AddItem.css";
 
 export default function AddItem() {
+  const { state, dispatch } = useContext(Context);
   const inputRef = useRef();
   const [itemToAdd, setItemToAdd] = useState("");
   const [isToast, setIsToast] = useState(false);
@@ -13,6 +15,7 @@ export default function AddItem() {
     // send to firebase
     // if successful, show toast
     showToast();
+    dispatch({ type: `ADD_ITEM`, payload: itemToAdd });
   };
 
   const focusInput = () => {

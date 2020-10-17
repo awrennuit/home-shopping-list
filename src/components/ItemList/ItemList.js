@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Context } from "../App/App";
 import Checkbox from "./Checkbox";
 
 export default function ItemList() {
-  // hold api data
-  const [items, setItems] = useState([
-    "Tofu",
-    "Potatoes",
-    "sööp lööps",
-    "Almond Milk",
-    "Socks That Match",
-  ]);
+  const { state, dispatch } = useContext(Context);
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    if (state.items) setItems(state.items);
+  }, [state.items]);
 
   return (
     <div>
