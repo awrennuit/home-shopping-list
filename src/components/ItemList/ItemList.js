@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
+import { db } from "../../firebase";
 import { Context } from "../App/App";
-import Checkbox from "./Checkbox";
+import Item from "./Item";
 
 export default function ItemList() {
   const { state, dispatch } = useContext(Context);
@@ -12,9 +13,9 @@ export default function ItemList() {
 
   return (
     <>
-      {items.map((item, i) => (
+      {Object.entries(items).map((item, i) => (
         <div key={i}>
-          <Checkbox label={item} />
+          <Item label={item[1]} itemKey={item[0]} />
         </div>
       ))}
       <hr />

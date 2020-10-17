@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
+import { db } from "../../firebase";
 import { Context } from "../App/App";
-import "./Checkbox.css";
+import "./Item.css";
 
 export default function Checkbox(props) {
   const { state, dispatch } = useContext(Context);
@@ -11,6 +12,7 @@ export default function Checkbox(props) {
     if (isChecked) {
       timeout = setTimeout(() => {
         dispatch({ type: `REMOVE_ITEM`, payload: props.label });
+        db.ref(`items/${props.itemKey}`).remove();
       }, 2000);
     }
   }, [isChecked]);
@@ -27,7 +29,9 @@ export default function Checkbox(props) {
   };
 
   return (
-    <label className={`checkbox-container ${isChecked ? "checked" : "unchecked"}`}>
+    <label
+      className={`checkbox-container ${isChecked ? "checked" : "unchecked"}`}
+    >
       {props.label}
       <input
         checked={isChecked}

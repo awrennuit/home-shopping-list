@@ -31,7 +31,7 @@ export default function App() {
   const [state, dispatch] = useReducer(contextReducer, initialState);
 
   useEffect(() => {
-    db.ref().once("value", (snap) => {
+    db.ref(`items/`).once("value", (snap) => {
       dispatch({ type: `SET_ITEMS`, payload: snap.val() });
     });
   }, []);
