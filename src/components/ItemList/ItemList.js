@@ -1,20 +1,23 @@
 import React, { useState } from "react";
+import Checkbox from "./Checkbox";
 
 export default function ItemList() {
   // hold api data
-  const [item, setItem] = useState({ name: "Tofu", isChecked: false });
+  const [items, setItems] = useState([
+    "Tofu",
+    "Potatoes",
+    "sööp lööps",
+    "Almond Milk",
+    "Sock That Match",
+  ]);
 
   return (
     <div>
-      {/* map through data, create this for each */}
-      <label>
-        <input
-          type="checkbox"
-          value={item.isChecked}
-          onChange={setItem({ ...item, isChecked: !item.isChecked })}
-        />
-        {item.name}
-      </label>
+      {items.map((item, i) => (
+        <div key={i}>
+          <Checkbox label={item} />
+        </div>
+      ))}
     </div>
   );
 }
