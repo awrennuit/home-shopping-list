@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer } from "react";
+import { db } from "../../firebase";
 import AddItem from "../AddItem/AddItem";
 import ItemList from "../ItemList/ItemList";
 import "./App.css";
@@ -6,14 +7,7 @@ import "./App.css";
 export const Context = React.createContext();
 
 const initialState = {
-  items: [
-    "Tofu",
-    "Potatoes",
-    "sööp lööps",
-    "Almond Milk",
-    "Socks That Match",
-    "Googly Eyes",
-  ],
+  items: [],
 };
 
 const contextReducer = (state, action) => {
@@ -26,8 +20,8 @@ const contextReducer = (state, action) => {
         ...state,
         items: state.items.filter((e) => e !== action.payload),
       };
-    case `SET_ITEM`:
-      return { ...state, items: action.payload };
+    case `SET_ITEMS`:
+      return { items: action.payload };
     default:
       return initialState;
   }
@@ -35,6 +29,12 @@ const contextReducer = (state, action) => {
 
 export default function App() {
   const [state, dispatch] = useReducer(contextReducer, initialState);
+
+  useEffect(() => {
+    db.ref().once("value", (snap) => {
+      dispatch({ type: `SET_ITEMS`, payload: snap.val() });
+    });
+  }, []);
 
   return (
     <Context.Provider value={{ state, dispatch }}>
