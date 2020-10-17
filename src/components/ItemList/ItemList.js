@@ -8,7 +8,7 @@ export default function ItemList() {
     "Potatoes",
     "sööp lööps",
     "Almond Milk",
-    "Sock That Match",
+    "Socks That Match",
   ]);
 
   return (
