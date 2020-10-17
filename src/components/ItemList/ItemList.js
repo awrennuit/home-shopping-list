@@ -11,12 +11,13 @@ export default function ItemList() {
   }, [state.items]);
 
   return (
-    <div>
+    <>
       {items.map((item, i) => (
         <div key={i}>
           <Checkbox label={item} />
         </div>
       ))}
-    </div>
+      <hr />
+    </>
   );
 }
