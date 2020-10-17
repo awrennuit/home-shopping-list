@@ -1,0 +1,14 @@
+#toast {
+  color: #c98405;
+  margin: 0.5rem;
+  padding: 0;
+  transition: 0.3s;
+}
+
+.toast-shown {
+  opacity: 1;
+}
+
+.toast-hidden {
+  opacity: 0;
+}
