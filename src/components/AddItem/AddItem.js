@@ -1,14 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
+import Toast from "../Toast/Toast";
 import "./AddItem.css";
 
 export default function AddItem() {
   const inputRef = useRef();
   const [itemToAdd, setItemToAdd] = useState("");
+  const [isToast, setIsToast] = useState(false);
 
   useEffect(() => inputRef.current.focus(), []);
 
   const addItemToDatabase = () => {
     // send to firebase
+    // if successful, show toast
+    showToast();
+  };
+
+  const focusInput = () => {
+    setItemToAdd("");
+    inputRef.current.focus();
   };
 
   const handleSubmit = (e) => {
@@ -17,9 +26,11 @@ export default function AddItem() {
     focusInput();
   };
 
-  const focusInput = () => {
-    setItemToAdd("");
-    inputRef.current.focus();
+  const showToast = () => {
+    setIsToast(true);
+    setTimeout(() => {
+      setIsToast(false);
+    }, 2000);
   };
 
   return (
@@ -37,6 +48,7 @@ export default function AddItem() {
           +
         </button>
       </form>
+      <Toast shown={isToast} />
     </div>
   );
 }
