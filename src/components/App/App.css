@@ -1,0 +1,10 @@
+* {
+  font-size: 24px;
+  margin: 0;
+  outline: none; /* remove browser default input highlights */
+  padding: 0;
+}
+
+body {
+  padding: 1rem;
+}
