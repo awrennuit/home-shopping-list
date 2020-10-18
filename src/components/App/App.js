@@ -12,14 +12,6 @@ const initialState = {
 
 const contextReducer = (state, action) => {
   switch (action.type) {
-    case `ADD_ITEM`:
-      state.items.push(action.payload);
-      return { ...state };
-    case `REMOVE_ITEM`:
-      return {
-        ...state,
-        items: state.items.filter((e) => e !== action.payload),
-      };
     case `SET_ITEMS`:
       return { items: action.payload };
     default:
@@ -31,10 +23,17 @@ export default function App() {
   const [state, dispatch] = useReducer(contextReducer, initialState);
 
   useEffect(() => {
-    db.ref(`items/`).once("value", (snap) => {
-      dispatch({ type: `SET_ITEMS`, payload: snap.val() });
-    });
+    fetchData();
   }, []);
+
+  const fetchData = async () => {
+    let payload = "";
+    await db.ref(`items/`).once("value", (snap) => {
+      payload = snap.val();
+      delete payload[0];
+    });
+    dispatch({ type: `SET_ITEMS`, payload: payload });
+  };
 
   return (
     <Context.Provider value={{ state, dispatch }}>

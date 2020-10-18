@@ -11,21 +11,45 @@ export default function Checkbox(props) {
   useEffect(() => {
     if (isChecked) {
       timeout = setTimeout(() => {
-        dispatch({ type: `REMOVE_ITEM`, payload: props.label });
-        db.ref(`items/${props.itemKey}`).remove();
+        try {
+          removeItemFromDatabase();
+        } catch (error) {
+          alert(`Try again - something went wrong.`);
+        }
       }, 2000);
     }
   }, [isChecked]);
 
-  useEffect(() => {
-    setIsChecked(false);
-  }, [state.items]);
+  useEffect(() => setIsChecked(false), [state.items]);
 
   const handleChange = () => {
     if (isChecked) {
       clearTimeout(timeout);
     }
     setIsChecked(!isChecked);
+  };
+
+  const refreshApi = async () => {
+    let payload = "";
+    await db.ref(`items/`).once("value", (snap) => {
+      payload = snap.val();
+      delete payload[0];
+    });
+    dispatch({ type: `SET_ITEMS`, payload: payload });
+  };
+
+  const removeItemFromDatabase = async () => {
+    let keyToRemove = "";
+    await db.ref().once("value", (snap) => {
+      snap.forEach((child) => {
+        const children = Object.entries(child.val());
+        for (let item of children) {
+          if (item[1] === props.label) keyToRemove = item[0];
+        }
+      });
+    });
+    await db.ref(`items/${keyToRemove}`).remove();
+    refreshApi();
   };
 
   return (

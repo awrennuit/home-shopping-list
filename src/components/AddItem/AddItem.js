@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { db } from "../../firebase";
 import { Context } from "../App/App";
 import Toast from "../Toast/Toast";
 import "./AddItem.css";
@@ -12,10 +13,13 @@ export default function AddItem() {
   useEffect(() => inputRef.current.focus(), []);
 
   const addItemToDatabase = () => {
-    // send to firebase
-    // if successful, show toast
-    showToast();
-    dispatch({ type: `ADD_ITEM`, payload: itemToAdd });
+    try {
+      updateDatabase();
+      refreshApi();
+      showToast();
+    } catch (error) {
+      alert(`Try again - something went wrong.`);
+    }
   };
 
   const focusInput = () => {
@@ -25,8 +29,19 @@ export default function AddItem() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addItemToDatabase();
-    focusInput();
+    if (itemToAdd !== "") {
+      addItemToDatabase();
+      focusInput();
+    }
+  };
+
+  const refreshApi = async () => {
+    let payload = "";
+    await db.ref(`items/`).once("value", (snap) => {
+      payload = snap.val();
+      delete payload[0];
+    });
+    dispatch({ type: `SET_ITEMS`, payload: payload });
   };
 
   const showToast = () => {
@@ -34,6 +49,13 @@ export default function AddItem() {
     setTimeout(() => {
       setIsToast(false);
     }, 2000);
+  };
+
+  const updateDatabase = () => {
+    const randomId = Math.random().toString(36).substr(2, 13);
+    db.ref(`items/`).update({
+      [Object.values(state.items).length + randomId]: itemToAdd,
+    });
   };
 
   return (
