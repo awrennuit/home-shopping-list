@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { db } from "../../firebase";
 import { Context } from "../App/App";
 import "./Item.css";
@@ -6,11 +6,11 @@ import "./Item.css";
 export default function Checkbox(props) {
   const { state, dispatch } = useContext(Context);
   const [isChecked, setIsChecked] = useState(false);
-  let timeout = null;
+  let timeout = useRef(null);
 
   useEffect(() => {
     if (isChecked) {
-      timeout = setTimeout(() => {
+      timeout.current = setTimeout(() => {
         try {
           removeItemFromDatabase();
         } catch (error) {
@@ -24,7 +24,7 @@ export default function Checkbox(props) {
 
   const handleChange = () => {
     if (isChecked) {
-      clearTimeout(timeout);
+      clearTimeout(timeout.current);
     }
     setIsChecked(!isChecked);
   };
