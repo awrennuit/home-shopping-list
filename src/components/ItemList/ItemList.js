@@ -3,7 +3,7 @@ import { Context } from "../App/App";
 import Item from "./Item";
 
 export default function ItemList() {
-  const { state, dispatch } = useContext(Context);
+  const { state } = useContext(Context);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
