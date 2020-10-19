@@ -18,6 +18,7 @@ export default function Checkbox(props) {
         }
       }, 2000);
     }
+    // eslint-disable-next-line
   }, [isChecked]);
 
   useEffect(() => setIsChecked(false), [state.items]);
