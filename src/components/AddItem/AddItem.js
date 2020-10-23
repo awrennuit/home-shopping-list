@@ -41,7 +41,7 @@ export default function AddItem() {
       payload = snap.val();
       delete payload[0];
     });
-    dispatch({ type: `SET_ITEMS`, payload: payload });
+    dispatch({ type: `SET_SHOPPING_LIST`, payload: payload });
   };
 
   const showToast = () => {

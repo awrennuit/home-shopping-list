@@ -9,8 +9,8 @@ export default function ShoppingList() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    if (state.items) setItems(Object.values(state.items));
-  }, [state.items]);
+    if (state.shoppingList) setItems(Object.values(state.shoppingList));
+  }, [state.shoppingList]);
 
   return (
     <>

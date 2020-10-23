@@ -9,13 +9,16 @@ import "./App.css";
 export const Context = React.createContext();
 
 const initialState = {
-  items: [],
+  shoppingList: [],
+  recipes: {},
 };
 
 const contextReducer = (state, action) => {
   switch (action.type) {
-    case `SET_ITEMS`:
-      return { items: action.payload };
+    case `SET_SHOPPING_LIST`:
+      return { shoppingList: action.payload };
+    case `SET_RECIPES`:
+      return { recipes: action.payload };
     default:
       return initialState;
   }
@@ -34,7 +37,13 @@ export default function App() {
       payload = snap.val();
       delete payload[0];
     });
-    dispatch({ type: `SET_ITEMS`, payload: payload });
+    dispatch({ type: `SET_SHOPPING_LIST`, payload: payload });
+
+    await db.ref(`recipes/`).once("value", (snap) => {
+      payload = snap.val();
+      delete payload[0];
+    });
+    dispatch({ type: `SET_RECIPES`, payload: payload });
   };
 
   return (
