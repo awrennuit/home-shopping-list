@@ -1,7 +1,9 @@
 import React, { useEffect, useReducer } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { db } from "../../firebase";
-import AddItem from "../AddItem/AddItem";
-import ItemList from "../ItemList/ItemList";
+import Hub from "../Hub/Hub";
+import ShoppingList from "../ShoppingList/ShoppingList";
+import Recipes from "../Recipes/Recipes";
 import "./App.css";
 
 export const Context = React.createContext();
@@ -37,8 +39,11 @@ export default function App() {
 
   return (
     <Context.Provider value={{ state, dispatch }}>
-      <ItemList />
-      <AddItem />
+      <Router>
+        <Route exact path="/" component={Hub} />
+        <Route exact path="/shopping" component={ShoppingList} />
+        <Route exact path="/recipes" component={Recipes} />
+      </Router>
     </Context.Provider>
   );
 }
