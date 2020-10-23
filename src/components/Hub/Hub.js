@@ -4,8 +4,8 @@ import Menu from "./Menu";
 
 export default function Hub() {
   const menuItems = [
-    {component: "ItemList", url: "/shopping"},
-    {component: "Recipes", url: "/recipes"}
+    { component: "ShoppingList", url: "/shopping" },
+    { component: "Recipes", url: "/recipes" },
   ];
 
   return (
