@@ -1,0 +1,14 @@
+#home-btn {
+  background-color: #61b8ff;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  height: 44px;
+  margin-bottom: 1rem;
+  transition: 0.3s;
+  width: 100%;
+}
+
+#home-btn:hover {
+  background-color: #66dbff;
+}
