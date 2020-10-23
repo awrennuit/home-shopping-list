@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import AddItem from "../AddItem/AddItem";
 import { Context } from "../App/App";
+import HomeButton from "../HomeButton/HomeButton";
 import ShoppingItem from "./ShoppingItem";
 
 export default function ShoppingList() {
@@ -13,6 +14,7 @@ export default function ShoppingList() {
 
   return (
     <>
+      <HomeButton />
       {items.length > 0 ? (
         items.map((item, i) => (
           <div key={i}>
