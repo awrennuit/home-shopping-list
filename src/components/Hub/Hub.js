@@ -11,7 +11,7 @@ export default function Hub() {
   return (
     <div id="hub-wrapper">
       <p className="hub-heading">⋆｡*ﾟ✲**✲ﾟ*｡⋆</p>
-      <h1 className="hub-heading">Household Hub</h1>
+      <h1>Household Hub</h1>
       <p className="hub-heading">⋆｡*ﾟ✲**✲ﾟ*｡⋆</p>
       {menuItems.map((link, i) => (
         <Fragment key={i}>
