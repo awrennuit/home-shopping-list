@@ -27,7 +27,7 @@ export default function Recipes() {
         ))}
       </ul>
       <hr />
-      <p>ADD RECIPES HERE</p>
+      <p>PUT BTN HERE</p>
     </>
   );
 }

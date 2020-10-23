@@ -25,7 +25,11 @@ export default function ShoppingList() {
         <p>Nothing on the list yet</p>
       )}
       <hr />
-      <AddItem />
+      <AddItem
+        contextPath="SET_SHOPPING_LIST"
+        dbUrl="items/"
+        stateLength="shoppingList"
+      />
     </>
   );
 }

@@ -4,7 +4,7 @@ import { Context } from "../App/App";
 import Toast from "../Toast/Toast";
 import "./AddItem.css";
 
-export default function AddItem() {
+export default function AddItem(props) {
   const { state, dispatch } = useContext(Context);
   const inputRef = useRef();
   const [itemToAdd, setItemToAdd] = useState("");
@@ -35,13 +35,20 @@ export default function AddItem() {
     }
   };
 
+  // IMPROVE SO IT DOESNT GRAB ALL DATA WHEN ONLY ONE SET IS UPDATED
   const refreshApi = async () => {
     let payload = "";
-    await db.ref(`items/`).once("value", (snap) => {
+    await db.ref(props.dbUrl).once("value", (snap) => {
       payload = snap.val();
       delete payload[0];
     });
-    dispatch({ type: `SET_SHOPPING_LIST`, payload: payload });
+    dispatch({ type: props.contextPath, payload: payload });
+
+    await db.ref(`recipes/`).once("value", (snap) => {
+      payload = snap.val();
+      delete payload[0];
+    });
+    dispatch({ type: `SET_RECIPES`, payload: payload });
   };
 
   const showToast = () => {
@@ -51,10 +58,10 @@ export default function AddItem() {
     }, 2000);
   };
 
-  const updateDatabase = () => {
+  const updateDatabase = async () => {
     const randomId = Math.random().toString(36).substr(2, 13);
-    db.ref(`items/`).update({
-      [Object.values(state.items).length + randomId]: itemToAdd,
+    await db.ref(props.dbUrl).update({
+      [Object.values(state[props.stateLength]).length + randomId]: itemToAdd,
     });
   };
 

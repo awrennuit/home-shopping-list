@@ -16,9 +16,9 @@ const initialState = {
 const contextReducer = (state, action) => {
   switch (action.type) {
     case `SET_SHOPPING_LIST`:
-      return { shoppingList: action.payload };
+      return { ...state, shoppingList: action.payload };
     case `SET_RECIPES`:
-      return { recipes: action.payload };
+      return { ...state, recipes: action.payload };
     default:
       return initialState;
   }

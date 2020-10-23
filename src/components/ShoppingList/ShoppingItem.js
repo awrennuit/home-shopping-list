@@ -21,7 +21,7 @@ export default function Checkbox(props) {
     // eslint-disable-next-line
   }, [isChecked]);
 
-  useEffect(() => setIsChecked(false), [state.items]);
+  useEffect(() => setIsChecked(false), [state.shoppingList]);
 
   const handleChange = () => {
     if (isChecked) {
