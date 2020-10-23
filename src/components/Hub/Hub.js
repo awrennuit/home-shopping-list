@@ -4,8 +4,8 @@ import Menu from "./Menu";
 
 export default function Hub() {
   const menuItems = [
-    { component: "ShoppingList", url: "/shopping" },
-    { component: "Recipes", url: "/recipes" },
+    { label: "Shopping List", url: "/shopping" },
+    { label: "Recipes", url: "/recipes" },
   ];
 
   return (
@@ -15,7 +15,7 @@ export default function Hub() {
       <p className="hub-heading">⋆｡*ﾟ✲**✲ﾟ*｡⋆</p>
       {menuItems.map((link, i) => (
         <Fragment key={i}>
-          <Menu component={link.component} url={link.url} />
+          <Menu label={link.label} url={link.url} />
         </Fragment>
       ))}
     </div>
