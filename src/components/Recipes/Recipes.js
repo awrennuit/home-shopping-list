@@ -16,7 +16,7 @@ export default function Recipes() {
   return (
     <>
       <HomeButton />
-      <ul id="recipe-main-list">
+      <ul className="main-list">
         {/* have only keys map */}
         {/* click on key, push history to page, show ingredients */}
         {/* add new ingredient button */}
