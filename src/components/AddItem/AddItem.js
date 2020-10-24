@@ -76,7 +76,7 @@ export default function AddItem(props) {
           type="text"
           value={itemToAdd}
         />
-        <button id="add-btn" type="submit">
+        <button className="add-btn" type="submit">
           +
         </button>
       </form>
