@@ -5,8 +5,10 @@ import Menu from "./Menu";
 export default function Hub() {
   const menuItems = [
     { label: "Shopping List", url: "/shopping" },
-    { label: "Recipes", url: "/recipes" },
+    // { label: "Recipes", url: "/recipes" },
     { label: "Wishlist", url: "/wishlist" },
+    { label: "Chores", url: "/chores" },
+    { label: "[in progress]", url: "/" },
   ];
 
   return (

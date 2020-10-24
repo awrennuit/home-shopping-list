@@ -7,21 +7,25 @@ import Hub from "../Hub/Hub";
 import Recipes from "../Recipes/Recipes";
 import ShoppingList from "../ShoppingList/ShoppingList";
 import Wishlist from "../Wishlist/Wishlist";
+import Chores from "../Chores/Chores";
 
 export const Context = React.createContext();
 
 const initialState = {
-  shoppingList: [],
+  chores: [],
   recipes: {},
+  shoppingList: [],
   wishlist: [],
 };
 
 const contextReducer = (state, action) => {
   switch (action.type) {
-    case `SET_SHOPPING_LIST`:
-      return { ...state, shoppingList: action.payload };
+    case `SET_CHORES`:
+      return { ...state, chores: action.payload };
     case `SET_RECIPES`:
       return { ...state, recipes: action.payload };
+    case `SET_SHOPPING_LIST`:
+      return { ...state, shoppingList: action.payload };
     case `SET_WISHLIST`:
       return { ...state, wishlist: action.payload };
     default:
@@ -56,6 +60,12 @@ export default function App() {
       delete payload[0];
     });
     dispatch({ type: `SET_WISHLIST`, payload: payload });
+
+    await db.ref(`chores/`).once("value", (snap) => {
+      payload = snap.val();
+      delete payload[0];
+    });
+    dispatch({ type: `SET_CHORES`, payload: payload });
   };
 
   return (
@@ -66,6 +76,7 @@ export default function App() {
         <Route exact path="/recipes" component={Recipes} />
         <Route exact path="/shopping" component={ShoppingList} />
         <Route exact path="/wishlist" component={Wishlist} />
+        <Route exact path="/chores" component={Chores} />
       </Router>
     </Context.Provider>
   );
