@@ -5,6 +5,7 @@ import Hub from "../Hub/Hub";
 import ShoppingList from "../ShoppingList/ShoppingList";
 import Recipes from "../Recipes/Recipes";
 import "./App.css";
+import AddRecipe from "../AddRecipe/AddRecipe";
 
 export const Context = React.createContext();
 
@@ -52,6 +53,7 @@ export default function App() {
         <Route exact path="/" component={Hub} />
         <Route exact path="/shopping" component={ShoppingList} />
         <Route exact path="/recipes" component={Recipes} />
+        <Route exact path="/add-recipe" component={AddRecipe} />
       </Router>
     </Context.Provider>
   );

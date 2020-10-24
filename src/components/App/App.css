@@ -8,3 +8,13 @@
 body {
   padding: 1rem;
 }
+
+.main-list {
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+}
+
+.main-list li {
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
