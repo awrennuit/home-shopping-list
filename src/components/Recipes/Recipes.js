@@ -16,19 +16,19 @@ export default function Recipes() {
   return (
     <>
       <HomeButton />
-      <ul>
+      <ul id="recipe-main-list">
         {/* have only keys map */}
         {/* click on key, push history to page, show ingredients */}
         {/* add new ingredient button */}
         {/* button to add all ingredients to shopping list */}
         {Object.keys(recipes).map((name, i) => (
           <Fragment key={i}>
-            <li>{name}</li>
-            <ul>
+            <li onClick={() => history.push(`/recipe/${name}`)}>{name}</li>
+            {/* <ul>
               {Object.values(recipes[name]).map((ingredient, j) => (
                 <li key={j}>{ingredient}</li>
               ))}
-            </ul>
+            </ul> */}
           </Fragment>
         ))}
       </ul>
