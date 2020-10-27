@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { db } from "../../firebase";
 import { Context } from "../App/App";
-import "./ShoppingItem.css";
+import "./GenericItem.css";
 
-export default function Checkbox(props) {
-  const { state, dispatch } = useContext(Context);
+export default function GenericItem(props) {
+  const { dispatch } = useContext(Context);
   const [isChecked, setIsChecked] = useState(false);
   let timeout = useRef(null);
 
@@ -21,7 +21,7 @@ export default function Checkbox(props) {
     // eslint-disable-next-line
   }, [isChecked]);
 
-  useEffect(() => setIsChecked(false), [state.shoppingList]);
+  useEffect(() => setIsChecked(false), [props.apiEndpoint]);
 
   const handleChange = () => {
     if (isChecked) {
@@ -32,11 +32,11 @@ export default function Checkbox(props) {
 
   const refreshApi = async () => {
     let payload = "";
-    await db.ref(`items/`).once("value", (snap) => {
+    await db.ref(props.dbUrl).once("value", (snap) => {
       payload = snap.val();
       delete payload[0];
     });
-    dispatch({ type: `SET_SHOPPING_LIST`, payload: payload });
+    dispatch({ type: props.contextPath, payload: payload });
   };
 
   const removeItemFromDatabase = async () => {
@@ -49,7 +49,7 @@ export default function Checkbox(props) {
         }
       });
     });
-    await db.ref(`items/${keyToRemove}`).remove();
+    await db.ref(`${props.dbUrl}${keyToRemove}`).remove();
     refreshApi();
   };
 
