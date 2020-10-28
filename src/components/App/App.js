@@ -40,32 +40,22 @@ export default function App() {
     fetchData();
   }, []);
 
-  // turn into loop to reuse code
   const fetchData = async () => {
-    let payload = "";
-    await db.ref(`items/`).once("value", (snap) => {
-      payload = snap.val();
-      delete payload[0];
-    });
-    dispatch({ type: `SET_SHOPPING_LIST`, payload: payload });
+    const dataToStore = [
+      { url: "chores/", type: "SET_CHORES" },
+      { url: "recipes/", type: "SET_RECIPES" },
+      { url: "items/", type: "SET_SHOPPING_LIST" },
+      { url: "wishlist/", type: "SET_WISHLIST" },
+    ];
 
-    await db.ref(`recipes/`).once("value", (snap) => {
-      payload = snap.val();
-      delete payload[0];
-    });
-    dispatch({ type: `SET_RECIPES`, payload: payload });
-
-    await db.ref(`wishlist/`).once("value", (snap) => {
-      payload = snap.val();
-      delete payload[0];
-    });
-    dispatch({ type: `SET_WISHLIST`, payload: payload });
-
-    await db.ref(`chores/`).once("value", (snap) => {
-      payload = snap.val();
-      delete payload[0];
-    });
-    dispatch({ type: `SET_CHORES`, payload: payload });
+    for (let data of dataToStore) {
+      let payload = "";
+      await db.ref(data.url).once("value", (snap) => {
+        payload = snap.val();
+        delete payload[0];
+      });
+      dispatch({ type: data.type, payload: payload });
+    }
   };
 
   return (
