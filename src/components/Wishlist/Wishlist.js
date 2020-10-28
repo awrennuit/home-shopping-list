@@ -6,13 +6,11 @@ export default function Wishlist() {
   const { state } = useContext(Context);
 
   return (
-    <>
-      <GenericList
-        apiEndpoint={state.wishlist}
-        contextPath="SET_WISHLIST"
-        dbUrl="wishlist/"
-        stateLength="wishlist"
-      />
-    </>
+    <GenericList
+      apiEndpoint={state.wishlist}
+      contextPath="SET_WISHLIST"
+      dbUrl="wishlist/"
+      stateLength="wishlist"
+    />
   );
 }

@@ -6,13 +6,11 @@ export default function ShoppingList() {
   const { state } = useContext(Context);
 
   return (
-    <>
-      <GenericList
-        apiEndpoint={state.shoppingList}
-        contextPath="SET_SHOPPING_LIST"
-        dbUrl="items/"
-        stateLength="shoppingList"
-      />
-    </>
+    <GenericList
+      apiEndpoint={state.shoppingList}
+      contextPath="SET_SHOPPING_LIST"
+      dbUrl="items/"
+      stateLength="shoppingList"
+    />
   );
 }
