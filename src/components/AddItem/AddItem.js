@@ -69,7 +69,7 @@ export default function AddItem(props) {
     <div id="add-wrapper">
       <form onSubmit={(e) => handleSubmit(e)}>
         <input
-          id="add-input"
+          className="add-input"
           onChange={(e) => setItemToAdd(e.target.value)}
           placeholder="what to buy?"
           ref={inputRef}
