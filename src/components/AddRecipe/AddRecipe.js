@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import "./AddRecipe.css";
+import HomeButton from "../HomeButton/HomeButton";
 
 export default function AddRecipe() {
   const ingredientRef = useRef();
@@ -8,6 +10,16 @@ export default function AddRecipe() {
   const [recipeName, setRecipeName] = useState("");
 
   useEffect(() => recipeRef.current.focus(), []);
+
+  const handleRecipeSubmittal = () => {
+    // add recipe and ingredients to database
+  };
+
+  const removeIngredient = (item) => {
+    setTimeout(() => {
+      setIngredients((ingredients) => ingredients.filter((i) => i !== item));
+    }, 2000);
+  };
 
   const submitNewIngredient = (e) => {
     e.preventDefault();
@@ -22,9 +34,11 @@ export default function AddRecipe() {
 
   return (
     <>
+      <HomeButton />
       <h1>New Recipe</h1>
-      <label>Name</label>
+      <label>Recipe Name</label>
       <input
+        className="add-input"
         onChange={(e) => setRecipeName(e.target.value)}
         placeholder="recipe name"
         ref={recipeRef}
@@ -32,11 +46,12 @@ export default function AddRecipe() {
         value={recipeName}
       />
 
-      <form onSubmit={(e) => submitNewIngredient(e)}>
-        <p>Ingredients</p>
+      <form id="recipe-form" onSubmit={(e) => submitNewIngredient(e)}>
+        <label>New Ingredient</label>
         <input
+          className="add-input"
           onChange={(e) => setNewIngredient(e.target.value)}
-          placeholder="ingredient"
+          placeholder="new ingredient"
           ref={ingredientRef}
           type="text"
           value={newIngredient}
@@ -50,14 +65,25 @@ export default function AddRecipe() {
       {/* have output preview below with ACCEPT button? */}
       {/* also have DELETE button next to each ingredient? */}
       {/* or a "tap ingredient to remove" note? */}
-      <div style={{marginTop:"1rem"}}>
-        <h1 style={{textAlign:"center"}}>{recipeName}</h1>
+      <div style={{ marginTop: "1rem" }}>
+        <h1 style={{ marginBottom: "0.5rem", textAlign: "center" }}>
+          {recipeName}
+        </h1>
         <ul className="main-list">
           {ingredients.map((item, i) => (
-            <li key={i}>{item}</li>
+            <li key={i} onClick={() => removeIngredient(item)}>
+              {item}
+            </li>
           ))}
         </ul>
       </div>
+      <button
+        className="add-btn"
+        onClick={handleRecipeSubmittal}
+        style={{ display: "block", margin: "0 auto" }}
+      >
+        ✓
+      </button>
     </>
   );
 }
