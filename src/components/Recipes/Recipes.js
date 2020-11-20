@@ -1,7 +1,6 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Context } from "../App/App";
-import "./Recipes.css";
 import HomeButton from "../HomeButton/HomeButton";
 
 export default function Recipes() {
@@ -35,8 +34,8 @@ export default function Recipes() {
       <hr />
       {/* on click go to new page to add recipe & ingredients */}
       {/* move to top? keep bot for consistency? */}
-      <div id="add-recipe-wrapper">
-        <button id="add-recipe-btn" onClick={() => history.push("/add-recipe")}>
+      <div className="add-btn-long-wrapper">
+        <button className="add-btn-long" onClick={() => history.push("/add-recipe")}>
           New Recipe
         </button>
       </div>
