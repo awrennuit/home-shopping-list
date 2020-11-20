@@ -8,6 +8,7 @@ import Recipes from "../Recipes/Recipes";
 import ShoppingList from "../ShoppingList/ShoppingList";
 import Wishlist from "../Wishlist/Wishlist";
 import Chores from "../Chores/Chores";
+import BirthdayTracker from "../BirthdayTracker/BirthdayTracker";
 
 export const Context = React.createContext();
 
@@ -44,7 +45,7 @@ export default function App() {
     const dataToStore = [
       { url: "chores/", type: "SET_CHORES" },
       { url: "recipes/", type: "SET_RECIPES" },
-      { url: "items/", type: "SET_SHOPPING_LIST" },
+      { url: "shopping/", type: "SET_SHOPPING_LIST" },
       { url: "wishlist/", type: "SET_WISHLIST" },
     ];
 
@@ -63,10 +64,11 @@ export default function App() {
       <Router>
         <Route exact path="/" component={Hub} />
         <Route exact path="/add-recipe" component={AddRecipe} />
+        <Route exact path="/birthdays" component={BirthdayTracker} />
+        <Route exact path="/chores" component={Chores} />
         <Route exact path="/recipes" component={Recipes} />
         <Route exact path="/shopping" component={ShoppingList} />
         <Route exact path="/wishlist" component={Wishlist} />
-        <Route exact path="/chores" component={Chores} />
       </Router>
     </Context.Provider>
   );
