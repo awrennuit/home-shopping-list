@@ -1,0 +1,28 @@
+.birthday-month {
+  font-weight: bold;
+  text-decoration: underline;
+  z-index: 1;
+}
+
+.birthday-item {
+  margin-left: 1rem;
+}
+
+.hide-content {
+  max-height: 0;
+  opacity: 0;
+  transition: 0.5s;
+  z-index: 0;
+}
+
+.hide-content li {
+  transition: 0.5s;
+  visibility: hidden;
+}
+
+.view-content {
+  max-height: 100%;
+  opacity: 1;
+  transition: 0.5s;
+  z-index: 0;
+}
