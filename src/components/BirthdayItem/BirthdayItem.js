@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "../BirthdayTracker/BirthdayTracker.css";
 
 export default function BirthdayItem(props) {
   const [birthdayClass, setBirthdayClass] = useState("hide-content");

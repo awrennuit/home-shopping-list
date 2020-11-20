@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./BirthdayTracker.css";
 import HomeButton from "../HomeButton/HomeButton";
 import BirthdayItem from "../BirthdayItem/BirthdayItem";
