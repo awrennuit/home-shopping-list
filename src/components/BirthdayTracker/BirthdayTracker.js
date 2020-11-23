@@ -1,41 +1,44 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./BirthdayTracker.css";
 import HomeButton from "../HomeButton/HomeButton";
 import BirthdayItem from "../BirthdayItem/BirthdayItem";
+import { Context } from "../App/App";
 
 export default function BirthdayTracker() {
-  const monthList = [
-    {
-      January: [
-        {
-          birthday: "May 22",
-          name: "Sammi",
-          zodiac: "Gemini",
-        },
-        {
-          birthday: "August 13",
-          name: "Logan",
-          zodiac: "Leo",
-        },
-      ],
-    },
-    {
-      February: [
-        {
-          birthday: "Making it up",
-          name: "Peter",
-          zodiac: "idk",
-        },
-        {
-          birthday: "September 27",
-          name: "Kelly",
-          zodiac: "libra",
-        },
-      ],
-    },
+  const { state } = useContext(Context);
+  const [monthList, setMonthList] = useState([]);
+  const [viewZodiac, setViewZodiac] = useState(false);
+  const allMonths = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
-  const [viewZodiac, setViewZodiac] = useState(false);
+  useEffect(() => {
+    if (state.birthdays) {
+      let birthdays = Object.assign({}, state.birthdays);
+      for (let month of Object.keys(state.birthdays)) {
+        switch (month) {
+          case month:
+            const keyToReplace = birthdays[month];
+            delete birthdays[month];
+            birthdays[allMonths[month - 1]] = keyToReplace;
+          default:
+            break;
+        }
+      }
+      setMonthList(birthdays);
+    }
+  }, [state.birthdays]);
 
   return (
     <>
@@ -49,9 +52,9 @@ export default function BirthdayTracker() {
           View {viewZodiac ? "Birthdays?" : "Zodiac?"}
         </button>
       </div>
-      {monthList.map((month, i) => (
+      {Object.entries(monthList).map((item, i) => (
         <div key={i} style={{ marginTop: "1.5rem" }}>
-          <BirthdayItem month={month} viewZodiac={viewZodiac} />
+          <BirthdayItem month={item} viewZodiac={viewZodiac} />
         </div>
       ))}
       {/* button to add new person to month */}
