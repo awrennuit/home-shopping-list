@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { db } from "../../firebase";
 import "./AddRecipe.css";
 import HomeButton from "../HomeButton/HomeButton";
 
@@ -12,7 +13,11 @@ export default function AddRecipe() {
   useEffect(() => recipeRef.current.focus(), []);
 
   const handleRecipeSubmittal = () => {
-    // add recipe and ingredients to database
+    updateDatabase();
+    setIngredients([]);
+    setNewIngredient("");
+    setRecipeName("");
+    recipeRef.current.focus();
   };
 
   const removeIngredient = (item) => {
@@ -30,6 +35,12 @@ export default function AddRecipe() {
     }
     setNewIngredient("");
     ingredientRef.current.focus();
+  };
+
+  const updateDatabase = async () => {
+    await db.ref(`recipes/`).update({
+      [recipeName]: ingredients,
+    });
   };
 
   return (
@@ -62,9 +73,7 @@ export default function AddRecipe() {
       </form>
 
       <hr />
-      {/* have output preview below with ACCEPT button? */}
-      {/* also have DELETE button next to each ingredient? */}
-      {/* or a "tap ingredient to remove" note? */}
+      {/* DELETE button next to each ingredient when hovered */}
       <div style={{ marginTop: "1rem" }}>
         <h1 style={{ marginBottom: "0.5rem", textAlign: "center" }}>
           {recipeName}
