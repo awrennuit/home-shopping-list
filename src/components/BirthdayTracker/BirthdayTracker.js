@@ -8,23 +8,23 @@ export default function BirthdayTracker() {
   const { state } = useContext(Context);
   const [monthList, setMonthList] = useState([]);
   const [viewZodiac, setViewZodiac] = useState(false);
-  const allMonths = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
 
   useEffect(() => {
-    if (state.birthdays) {
+    if (state.birthdays.length > 0) {
+      const allMonths = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
       let birthdays = Object.assign({}, state.birthdays);
       for (let month of Object.keys(state.birthdays)) {
         switch (month) {
@@ -32,6 +32,7 @@ export default function BirthdayTracker() {
             const keyToReplace = birthdays[month];
             delete birthdays[month];
             birthdays[allMonths[month - 1]] = keyToReplace;
+            break;
           default:
             break;
         }
