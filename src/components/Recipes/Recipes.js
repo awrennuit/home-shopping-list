@@ -1,41 +1,45 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { db } from "../../firebase";
 import { Context } from "../App/App";
 import HomeButton from "../HomeButton/HomeButton";
 
 export default function Recipes() {
   const history = useHistory();
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
     if (state.recipes) setRecipes(state.recipes);
   }, [state.recipes]);
 
+  const pushHistoryToThisRecipe = async (recipe) => {
+    const urlParam = recipe.replace(/\s+/g, "-").toLowerCase();
+    let payload = [];
+    await db.ref(`recipes/${recipe}`).once("value", (snap) => {
+      payload = snap.val();
+    });
+    dispatch({ type: `SET_THIS_RECIPE`, payload: payload });
+    history.push(`/recipes/${urlParam}`);
+  };
+
   return (
     <>
       <HomeButton />
       <ul className="main-list">
-        {/* have only keys map */}
-        {/* click on key, push history to page, show ingredients */}
-        {/* add new ingredient button */}
-        {/* button to add all ingredients to shopping list */}
+        {/* button to add all ingredients to shopping list? */}
         {Object.keys(recipes).map((name, i) => (
-          <Fragment key={i}>
-            <li onClick={() => history.push(`/recipe/${name}`)}>{name}</li>
-            {/* <ul>
-              {Object.values(recipes[name]).map((ingredient, j) => (
-                <li key={j}>{ingredient}</li>
-              ))}
-            </ul> */}
-          </Fragment>
+          <li key={i} onClick={() => pushHistoryToThisRecipe(name)}>
+            {name}
+          </li>
         ))}
       </ul>
       <hr />
-      {/* on click go to new page to add recipe & ingredients */}
-      {/* move to top? keep bot for consistency? */}
       <div className="add-btn-long-wrapper">
-        <button className="add-btn-long" onClick={() => history.push("/add-recipe")}>
+        <button
+          className="add-btn-long"
+          onClick={() => history.push("/recipes/add")}
+        >
           New Recipe
         </button>
       </div>
