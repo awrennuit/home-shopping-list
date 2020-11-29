@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { db } from "../../firebase";
 import "./AddRecipe.css";
-import HomeButton from "../HomeButton/HomeButton";
 
 export default function AddRecipe() {
+  const history = useHistory();
   const ingredientRef = useRef();
   const recipeRef = useRef();
   const [ingredients, setIngredients] = useState([]);
@@ -45,7 +46,11 @@ export default function AddRecipe() {
 
   return (
     <>
-      <HomeButton />
+      <div>
+        <button id="back-btn" onClick={() => history.push("/recipes")}>
+          BACK
+        </button>
+      </div>
       <h1>New Recipe</h1>
       <label>Recipe Name</label>
       <input
