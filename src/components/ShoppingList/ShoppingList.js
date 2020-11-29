@@ -9,7 +9,7 @@ export default function ShoppingList() {
     <GenericList
       apiEndpoint={state.shoppingList}
       contextPath="SET_SHOPPING_LIST"
-      dbUrl="items/"
+      dbUrl="shopping/"
       stateLength="shoppingList"
     />
   );
