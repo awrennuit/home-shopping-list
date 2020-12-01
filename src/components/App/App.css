@@ -9,6 +9,10 @@ body {
   padding: 1rem;
 }
 
+li {
+  font-size: 1.3rem;
+}
+
 .main-list {
   margin-bottom: 1rem;
   padding-left: 1rem;
