@@ -16,3 +16,20 @@
 #recipe-form {
   margin: 1rem 0;
 }
+
+.delete-btn-li {
+  position: relative;
+}
+
+.delete-btn {
+  background-color: red;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  height: 40px;
+  position: absolute;
+  right: 0;
+  top: -5px;
+  width: 40px;
+}

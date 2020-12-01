@@ -15,16 +15,11 @@ export default function AddRecipe() {
 
   const handleRecipeSubmittal = () => {
     updateDatabase();
+    // update recipe context
     setIngredients([]);
     setNewIngredient("");
     setRecipeName("");
     recipeRef.current.focus();
-  };
-
-  const removeIngredient = (item) => {
-    setTimeout(() => {
-      setIngredients((ingredients) => ingredients.filter((i) => i !== item));
-    }, 2000);
   };
 
   const submitNewIngredient = (e) => {
@@ -78,15 +73,22 @@ export default function AddRecipe() {
       </form>
 
       <hr />
-      {/* DELETE button next to each ingredient when hovered */}
       <div style={{ marginTop: "1rem" }}>
         <h1 style={{ marginBottom: "0.5rem", textAlign: "center" }}>
           {recipeName}
         </h1>
         <ul className="main-list">
           {ingredients.map((item, i) => (
-            <li key={i} onClick={() => removeIngredient(item)}>
+            <li
+              className="delete-btn-li"
+              key={i}
+              onClick={() =>
+                setIngredients((ingredients) =>
+                  ingredients.filter((i) => i !== item)
+                )}
+            >
               {item}
+              <button className="delete-btn">X</button>
             </li>
           ))}
         </ul>
