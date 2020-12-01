@@ -75,7 +75,7 @@ export default function App() {
         <Route exact path="/chores" component={Chores} />
         <Route exact path="/recipes" component={Recipes} />
         <Route exact path="/recipes/:id" component={ThisRecipe} />
-        <Route exact path="/recipes/add" component={AddRecipe} />
+        <Route exact path="/recipe/add" component={AddRecipe} />
         <Route exact path="/shopping" component={ShoppingList} />
         <Route exact path="/wishlist" component={Wishlist} />
       </Router>

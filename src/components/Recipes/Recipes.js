@@ -38,7 +38,7 @@ export default function Recipes() {
       <div className="add-btn-long-wrapper">
         <button
           className="add-btn-long"
-          onClick={() => history.push("/recipes/add")}
+          onClick={() => history.push("/recipe/add")}
         >
           New Recipe
         </button>
