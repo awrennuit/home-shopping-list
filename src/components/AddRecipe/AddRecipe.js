@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { db } from "../../firebase";
+import { Context } from "../App/App";
 import "./AddRecipe.css";
 
 export default function AddRecipe() {
+  const { dispatch } = useContext(Context);
   const history = useHistory();
   const ingredientRef = useRef();
   const recipeRef = useRef();
@@ -15,11 +17,20 @@ export default function AddRecipe() {
 
   const handleRecipeSubmittal = () => {
     updateDatabase();
-    // update recipe context
+    refreshApi();
     setIngredients([]);
     setNewIngredient("");
     setRecipeName("");
     recipeRef.current.focus();
+  };
+
+  const refreshApi = async () => {
+    let payload = "";
+    await db.ref(`recipes/`).once("value", (snap) => {
+      payload = snap.val();
+      delete payload[0];
+    });
+    dispatch({ type: `SET_RECIPES`, payload: payload });
   };
 
   const submitNewIngredient = (e) => {
