@@ -6,7 +6,7 @@ import ThisRecipeItem from "../ThisRecipeItem/ThisRecipeItem";
 import Toast from "../Toast/Toast";
 
 export default function ThisRecipe() {
-  const { state } = useContext(Context);
+  const { dispatch, state } = useContext(Context);
   const history = useHistory();
   const params = useParams();
   const recipeName = `${params.id.charAt(0).toUpperCase()}${params.id
@@ -37,9 +37,19 @@ export default function ThisRecipe() {
     for (let item of ingredientsToAdd) {
       updateDatabase(item);
     }
+    refreshApi();
     showToast();
     setIngredientsToAdd([]);
     setResetChecks(true);
+  };
+
+  const refreshApi = async () => {
+    let payload = "";
+    await db.ref(`shopping/`).once("value", (snap) => {
+      payload = snap.val();
+      delete payload[0];
+    });
+    dispatch({ type: `SET_SHOPPING_LIST`, payload: payload });
   };
 
   const removeIngredientFromArray = (item) =>
@@ -61,12 +71,15 @@ export default function ThisRecipe() {
 
   return (
     <>
+      {/* re-GET ingredients on page refresh */}
       <div>
         <button id="back-btn" onClick={() => history.push("/recipes")}>
           BACK
         </button>
       </div>
-      <h2>{recipeName}</h2>
+      <h2 style={{ marginBottom: "1rem", textAlign: "center" }}>
+        {recipeName}
+      </h2>
       {ingredientList.map((item, i) => (
         <div key={i}>
           <ThisRecipeItem
@@ -77,6 +90,7 @@ export default function ThisRecipe() {
           />
         </div>
       ))}
+      <hr />
       <div style={{ textAlign: "center" }}>
         <button className="add-btn-long" onClick={addIngredientToDatabase}>
           Add to List
