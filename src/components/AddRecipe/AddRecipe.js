@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { db } from "../../firebase";
 import { Context } from "../App/App";
+import Toast from "../Toast/Toast";
 import "./AddRecipe.css";
 
 export default function AddRecipe() {
@@ -10,6 +11,7 @@ export default function AddRecipe() {
   const ingredientRef = useRef();
   const recipeRef = useRef();
   const [ingredients, setIngredients] = useState([]);
+  const [isToast, setIsToast] = useState(false);
   const [newIngredient, setNewIngredient] = useState("");
   const [recipeName, setRecipeName] = useState("");
 
@@ -18,6 +20,7 @@ export default function AddRecipe() {
   const handleRecipeSubmittal = () => {
     updateDatabase();
     refreshApi();
+    showToast();
     setIngredients([]);
     setNewIngredient("");
     setRecipeName("");
@@ -31,6 +34,13 @@ export default function AddRecipe() {
       delete payload[0];
     });
     dispatch({ type: `SET_RECIPES`, payload: payload });
+  };
+
+  const showToast = () => {
+    setIsToast(true);
+    setTimeout(() => {
+      setIsToast(false);
+    }, 2000);
   };
 
   const submitNewIngredient = (e) => {
@@ -104,13 +114,16 @@ export default function AddRecipe() {
           ))}
         </ul>
       </div>
-      <button
-        className="add-btn"
-        onClick={handleRecipeSubmittal}
-        style={{ display: "block", margin: "0 auto" }}
-      >
-        ✓
-      </button>
+      <div style={{ textAlign: "center" }}>
+        <button
+          className="add-btn"
+          onClick={handleRecipeSubmittal}
+          style={{ display: "block", margin: "0 auto" }}
+        >
+          ✓
+        </button>
+        <Toast shown={isToast} />
+      </div>
     </>
   );
 }
