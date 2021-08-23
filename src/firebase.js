@@ -1,4 +1,5 @@
 import firebase from "firebase/app";
+import "firebase/auth";
 import "firebase/database";
 
 const firebaseConfig = {
@@ -16,3 +17,30 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export const db = firebase.database();
+
+export function getCurrentUser() {
+  return new Promise((resolve, reject) => {
+    return firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        resolve(user);
+      } else {
+        resolve(null);
+      }
+    });
+  });
+}
+
+export async function loginUser(email, password) {
+  try {
+    const result = await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password);
+    return result;
+  } catch (error) {
+    return false;
+  }
+}
+
+export function logoutUser() {
+  return firebase.auth().signOut();
+}

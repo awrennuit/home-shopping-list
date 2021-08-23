@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { db } from "../../firebase";
+import { db, getCurrentUser } from "../../firebase";
 import "./App.css";
 import AddRecipe from "../AddRecipe/AddRecipe";
 import BirthdayTracker from "../BirthdayTracker/BirthdayTracker";
@@ -10,6 +10,7 @@ import Recipes from "../Recipes/Recipes";
 import ShoppingList from "../ShoppingList/ShoppingList";
 import ThisRecipe from "../ThisRecipe/ThisRecipe";
 import Wishlist from "../Wishlist/Wishlist";
+import Login from "../Login/Login";
 
 export const Context = React.createContext();
 
@@ -20,6 +21,7 @@ const initialState = {
   shoppingList: [],
   thisRecipe: [],
   wishlist: [],
+  user: {},
 };
 
 const contextReducer = (state, action) => {
@@ -36,6 +38,10 @@ const contextReducer = (state, action) => {
       return { ...state, thisRecipe: action.payload };
     case `SET_WISHLIST`:
       return { ...state, wishlist: action.payload };
+    case `SET_USER`:
+      return { ...state, user: action.payload };
+    case `UNSET_USER`:
+      return { ...state, user: {} };
     default:
       return initialState;
   }
@@ -67,10 +73,19 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    getCurrentUser().then((user) => {
+      if (user) {
+        dispatch({ type: `SET_USER`, payload: user.email });
+      }
+    });
+  }, [dispatch]);
+
   return (
     <Context.Provider value={{ state, dispatch }}>
       <Router>
-        <Route exact path="/" component={Hub} />
+        <Route exact path="/" component={Login} />
+        <Route exact path="/hub" component={Hub} />
         <Route exact path="/birthdays" component={BirthdayTracker} />
         <Route exact path="/chores" component={Chores} />
         <Route exact path="/recipes" component={Recipes} />

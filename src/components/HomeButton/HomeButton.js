@@ -7,7 +7,7 @@ export default function HomeButton() {
 
   return (
     <div>
-      <button id="home-btn" onClick={() => history.push("/")}>
+      <button id="home-btn" onClick={() => history.push("/hub")}>
         HOME
       </button>
     </div>
