@@ -14,6 +14,7 @@ export default function Login() {
     e.preventDefault();
     const res = await loginUser(email, password);
     if (res.user.email) {
+      localStorage.setItem('user', res.user.email);
       dispatch({ type: `SET_USER`, payload: res.user.email });
       history.push("/hub");
     } else {
@@ -23,7 +24,11 @@ export default function Login() {
 
   return (
     <div className="login-container">
-      <h1 style={{ WebkitTextStroke: "1px black" }}>Login</h1>
+      <h1>
+        <span className="hub-heading">⋆｡*ﾟ✲* </span>
+        Login
+        <span className="hub-heading"> *✲ﾟ*｡⋆</span>
+      </h1>
       <form onSubmit={(e) => handleLogin(e)}>
         <div className="input-container">
           <label className="login-label">Email </label>

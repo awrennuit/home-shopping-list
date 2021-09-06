@@ -1,8 +1,8 @@
 .login-container {
   background-color: #eee;
-  border: 10px solid #07aa9e;
+  border: 10px solid #61b8ff;
   border-radius: 10px;
-  color: #07aa9e;
+  color: #61b8ff;
   left: 50%;
   padding: 10px;
   position: absolute;
@@ -10,6 +10,10 @@
   top: 50%;
   transform: translate(-50%, -50%);
   width: 350px;
+}
+
+.login-container h1 {
+  color: #d48a00;
 }
 
 .input-container {
@@ -24,4 +28,15 @@
 .login-label {
   display: block;
   text-align: left;
+}
+
+.submit-btn {
+  background-color: #61b8ff;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  height: 44px;
+  margin: 0.5rem 0;
+  transition: 0.3s;
+  width: 180px;
 }

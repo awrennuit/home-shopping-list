@@ -52,24 +52,26 @@ export default function App() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [state.user]);
 
   const fetchData = async () => {
-    const dataToStore = [
-      { url: "birthdays/", type: "SET_BIRTHDAYS" },
-      { url: "chores/", type: "SET_CHORES" },
-      { url: "recipes/", type: "SET_RECIPES" },
-      { url: "shopping/", type: "SET_SHOPPING_LIST" },
-      { url: "wishlist/", type: "SET_WISHLIST" },
-    ];
+    if (state.user || localStorage.getItem("user")) {
+      const dataToStore = [
+        { url: "birthdays/", type: "SET_BIRTHDAYS" },
+        { url: "chores/", type: "SET_CHORES" },
+        { url: "recipes/", type: "SET_RECIPES" },
+        { url: "shopping/", type: "SET_SHOPPING_LIST" },
+        { url: "wishlist/", type: "SET_WISHLIST" },
+      ];
 
-    for (let data of dataToStore) {
-      let payload = "";
-      await db.ref(data.url).once("value", (snap) => {
-        payload = snap.val();
-        delete payload[0];
-      });
-      dispatch({ type: data.type, payload: payload });
+      for (let data of dataToStore) {
+        let payload = "";
+        await db.ref(data.url).once("value", (snap) => {
+          payload = snap.val();
+          delete payload[0];
+        });
+        dispatch({ type: data.type, payload: payload });
+      }
     }
   };
 
